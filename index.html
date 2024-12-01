@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spinning-Wheel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@2.0.8/dist/lottie-player.js"></script>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@2.0.8/dist/lottie-player.js"></script>
+<body id="body-header">
+    <canvas id="confetti"></canvas>
+
+    <div id="game">
+        <img class="pin" src="Assets/pin.png">
+        <img class="wheel" src="Assets/wheel-Photoroom.png">
+        <img class="stand" src="Assets/stand.png">
+        <img class="button" id="disable" src="Assets/button.png">
+    </div>
+    <marquee style="font-size: 20px; color: red; font-weight: bold; margin-top: 50rem;">
+        Free Redeem Code Daily. You can Get Only 1 Spin Daily. This project is solely for educational purposes.
+      </marquee>
+      
+<!-- Modal Popup for Congratulations -->
+<div id="congratulations-modal" class="modal" style="display:none;">
+    
+    <div class="modal-content">
+        <!-- Lottie Animation -->
+        <lottie-player 
+            src="https://lottie.host/13e2e76c-fc0a-4cf2-8557-6fccdd423e37/lekDtAhuYz.json" 
+            background="transparent" 
+            speed="1" 
+            style="width: 100px; height: 100px; margin: 0 auto;" 
+            loop 
+            autoplay
+            direction="1"
+            mode="normal">
+        </lottie-player>
+
+        <h1>Congratulations!</h1>
+        <p>You win a 10 Rupees Google Play Voucher</p>
+        <button id="claim-btn">Claim Now</button>
+    </div>
+</div>
+<!-- Verification Modal for Claiming -->
+<div id="verification-modal" class="modal">
+    <div class="modal-content" >
+        <!-- Lottie Animation -->
+        <lottie-player src="https://lottie.host/09c31673-e2b0-4e3c-a2da-fa97cac0cdd1/JXMrTTHNsR.json" background="#ffffff" speed="1" style="width: 100px; height: 100px"  loop autoplay direction="1" mode="normal" id="animation"></lottie-player>
+        <h1>Verifying...</h1>
+        <p>Please wait while we verify your claim.</p>
+        <div id="progress-container">
+            <progress id="progress-bar" value="0" max="100"></progress>
+            <span id="timer">30</span> seconds left
+        </div>
+    </div>
+</div>
+
+<!-- Success Modal after Verification -->
+<div id="success-modal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <lottie-player 
+            src="https://lottie.host/ae7b9e93-a880-4563-989a-bb0f8fa78d78/ZgSv5tNWYv.json"
+            background="transparent" 
+            speed="1" 
+            style="width: 100px; height: 100px" 
+            loop  
+            autoplay 
+            direction="1" 
+            mode="normal"
+            id="animation">
+        </lottie-player>
+
+        <h1>Verification Failed !</h1>
+        <p>You're Not Subscriber of <span id="voucher-code">TBS GAMER. Click on Subscribe Now button and Set Notification in All</span></p>
+        <button id="unbanNewIdButton">SUBSCRIBE NOW</button>
+
+        <!-- Timer and message when user has already spun -->
+        <div id="spin-again-container" style="display:none;">
+            <p>You are not regular viewer of TBS GAMER. Try Again After 24 Hours and make sure you're Subscriber</p>
+            <h1 id="spin-timer" style="color: red;">24:00:00</h1> <!-- Updated ID -->
+        </div>
+
+        <!-- Button to spin again or wait for the timer -->
+        <button id="unbanNewIdButtonss">TRY AGAIN</button>
+    </div>
+</div>
+
+<script>
+    // Simulate whether the user has already spun
+    let hasSpunToday = true; // Change this based on your condition (e.g., checking timestamp)
+
+    // Function to handle the timer countdown
+    function startTimer() {
+        let countdownTime = 24 * 60 * 60; // 24 hours in seconds
+        let countdownElement = document.getElementById('spin-timer'); // Updated to match new ID
+
+        let interval = setInterval(() => {
+            let hours = Math.floor(countdownTime / 3600);
+            let minutes = Math.floor((countdownTime % 3600) / 60);
+            let seconds = countdownTime % 60;
+
+            countdownElement.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+            if (countdownTime <= 0) {
+                clearInterval(interval);
+                countdownElement.textContent = "00:00:00"; // Timer finished
+                document.getElementById('unbanNewIdButton').disabled = false; // Enable spin again button
+            }
+
+            countdownTime--;
+        }, 1000);
+    }
+
+    document.getElementById('unbanNewIdButtonss').addEventListener('click', () => {
+        if (hasSpunToday) {
+            // Show the timer and disable button
+            document.getElementById('spin-again-container').style.display = 'block';
+            document.getElementById('unbanNewIdButton').disabled = true;
+            startTimer(); // Start countdown timer
+        } else {
+            // If not spun today, proceed with the normal spin process
+            alert("You are spinning now!");
+            // Call spin logic here
+        }
+    });
+</script>
+<script>
+    // Add event listener to the "SUBSCRIBE NOW" button
+    document.getElementById("unbanNewIdButton").addEventListener("click", function() {
+        // Open the YouTube channel in a new tab
+        window.open("https://www.youtube.com/@TBSGAMERSOFC", "_blank");
+    });
+</script>
+
+
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>
